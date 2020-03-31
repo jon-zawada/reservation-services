@@ -5,6 +5,9 @@
 import React from 'react';
 import moment from 'moment';
 import Weekdays from './Weekdays.jsx';
+import styled from '../Styles.jsx';
+
+const { Days, Cursor } = styled;
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -108,9 +111,9 @@ class Calendar extends React.Component {
     for (let i = 1; i <= this.daysInMonth(); i++) {
       let className = (i === this.currentDay() ? "day current-day" : "day");
       existingDays.push(
-        <td key={i} className={className} onClick={(event) => this.selectDay(event, i, this.state.formatContext)}>
+        <Days key={i} className={className} onClick={(event) => this.selectDay(event, i, this.state.formatContext)}>
           <span>{i}</span>
-        </td>
+        </Days>
       );
     }
     let daysArray = [...blankDays, ...existingDays];
@@ -141,9 +144,9 @@ class Calendar extends React.Component {
         <table className="calendar">
           <thead>
             <tr className="calendar-header">
-              <td onClick={this.lastMonth} colSpan="2">{'<-'}</td>
+              <Cursor onClick={this.lastMonth} colSpan="2">{'<-'}</Cursor>
               <td colSpan="6">{`${this.month()}, ${this.year()}`}</td>
-              <td onClick={this.nextMonth} colSpan="2">{'->'}</td>
+              <Cursor onClick={this.nextMonth} colSpan="2">{'->'}</Cursor>
 
             </tr>
           </thead>
