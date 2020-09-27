@@ -48,6 +48,9 @@ const Star = styled.img`
   width: 9px;
 `;
 
+const Arrow = styled.img`
+  width: 9px;
+`;
 
 const Reserve = styled.button`
   display: inline-block !important;
@@ -172,7 +175,7 @@ const Box = styled.div`
   display: block;
   width: 250px;
   cursor:pointer;
-
+  padding: 8.5px;
 `;
 
 const Cursor = styled.td`
@@ -180,5 +183,5 @@ const Cursor = styled.td`
 `;
 
 export default {
-  AppWrapper, Reserve, Price, Star, CircleButton, Days, Box, Cursor
+  AppWrapper, Reserve, Price, Star, CircleButton, Days, Box, Cursor, Arrow
 };

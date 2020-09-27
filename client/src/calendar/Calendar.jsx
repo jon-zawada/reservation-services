@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unused-state */
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-curly-brace-presence */
 /* eslint-disable prefer-const */
 /* eslint-disable react/destructuring-assignment */
@@ -7,7 +9,7 @@ import moment from 'moment';
 import Weekdays from './Weekdays.jsx';
 import styled from '../Styles.jsx';
 
-const { Days, Cursor } = styled;
+const { Days, Cursor, Arrow } = styled;
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -15,7 +17,7 @@ class Calendar extends React.Component {
     this.state = {
       formatContext: moment(),
       today: moment(),
-      checkIn: 'Check-in',
+      checkIn: 'Checkin',
       checkOut: 'Checkout'
     };
     // variables
@@ -84,9 +86,9 @@ class Calendar extends React.Component {
     let year = this.year();
     let month = formatContext.format('M');
     let date = `${month}/${day}/${year}`;
-    console.log(date);
+    // console.log(date);
 
-    if (this.state.checkIn === 'Check-in') {
+    if (this.state.checkIn === 'Checkin') {
       this.props.updateCheckIn(date);
       this.setState({
         checkIn: date
@@ -109,7 +111,7 @@ class Calendar extends React.Component {
     }
     let existingDays = [];
     for (let i = 1; i <= this.daysInMonth(); i++) {
-      let className = (i === this.currentDay() ? "day current-day" : "day");
+      let className = (i === this.currentDay() ? 'day current-day' : 'day');
       existingDays.push(
         <Days key={i} className={className} onClick={(event) => this.selectDay(event, i, this.state.formatContext)}>
           <span>{i}</span>
@@ -144,9 +146,13 @@ class Calendar extends React.Component {
         <table className="calendar">
           <thead>
             <tr className="calendar-header">
-              <Cursor onClick={this.lastMonth} colSpan="2">{'<-'}</Cursor>
+              <Cursor onClick={this.lastMonth} colSpan="2">
+                <Arrow src="/images/arrow-left.svg" alt="" />
+              </Cursor>
               <td colSpan="6">{`${this.month()}, ${this.year()}`}</td>
-              <Cursor onClick={this.nextMonth} colSpan="2">{'->'}</Cursor>
+              <Cursor onClick={this.nextMonth} colSpan="2">
+                <Arrow src="/images/arrow-right.svg" alt="" />
+              </Cursor>
 
             </tr>
           </thead>

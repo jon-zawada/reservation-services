@@ -12,7 +12,7 @@ const RateReview = ({ rate, avg, total }) => (
       <span> per night</span>
     </div>
     <div id="reviews">
-      <Star src="http://localhost:3000/images/34ce20a35fdf492194a5fd8389349ed7-star.svg" alt={star} />
+      <Star src="/images/34ce20a35fdf492194a5fd8389349ed7-star.svg" alt={star} />
       {`${avg}(${total} reviews)`}
     </div>
   </div>

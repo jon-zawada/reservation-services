@@ -29,7 +29,7 @@ class App extends React.Component {
       occupancy_tax: '',
       calendarOpen: false,
       guestsOpen: false,
-      checkIn: 'Check-in',
+      checkIn: 'Checkin',
       checkOut: 'Checkout',
       adults: 1,
       children: 0,
@@ -166,14 +166,16 @@ class App extends React.Component {
           total={this.state.total_review}
         />
         <hr />
-        <Box  onClick={this.calendarPopUp}><span>{this.state.checkIn}</span> --> <span>{this.state.checkOut}</span></Box>
+        <Box  onClick={this.calendarPopUp}>
+          <span>{this.state.checkIn}</span> - <span>{this.state.checkOut}</span>
+          </Box>
         {this.state.calendarOpen ? <Calendar updateCheckIn={this.updateCheckIn} updateCheckOut={this.updateCheckOut} updateNights={this.updateNights} updateTotal={this.updateTotal}/> : null}
         <hr />
         <div>Guests</div>
         <Box onClick={this.guestPopUp}>{this.state.adults + this.state.infants + this.state.children} guest(s)</Box>
           {this.state.guestsOpen ? <Guests increase={this.increase} decrease={this.decrease} adults={this.state.adults} children={this.state.children} infants={this.state.infants}/> : null}
         <hr />
-        {this.state.checkIn !== 'Check-in' && this.state.checkOut !== 'Checkout' ? <Pricing
+        {this.state.checkIn !== 'Checkin' && this.state.checkOut !== 'Checkout' ? <Pricing
           rate={this.state.rate}
           service={this.state.service_fee}
           occupancy={this.state.occupancy_tax}
