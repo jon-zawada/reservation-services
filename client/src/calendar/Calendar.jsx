@@ -9,7 +9,9 @@ import moment from 'moment';
 import Weekdays from './Weekdays.jsx';
 import styled from '../Styles.jsx';
 
-const { Days, Cursor, Arrow } = styled;
+const {
+  Days, Cursor, Arrow, DeadDays
+} = styled;
 
 class Calendar extends React.Component {
   constructor(props) {
@@ -35,6 +37,7 @@ class Calendar extends React.Component {
     this.nextMonth = this.nextMonth.bind(this);
     this.lastMonth = this.lastMonth.bind(this);
     this.selectDay = this.selectDay.bind(this);
+    this.monthNum = this.monthNum.bind(this);
   }
 
 
@@ -44,6 +47,10 @@ class Calendar extends React.Component {
 
   month() {
     return this.state.formatContext.format('MMMM');
+  }
+
+  monthNum() {
+    return this.state.formatContext.month(this.month()).format('M');
   }
 
   daysInMonth() {
@@ -112,11 +119,33 @@ class Calendar extends React.Component {
     let existingDays = [];
     for (let i = 1; i <= this.daysInMonth(); i++) {
       let className = (i === this.currentDay() ? 'day current-day' : 'day');
-      existingDays.push(
-        <Days key={i} className={className} onClick={(event) => this.selectDay(event, i, this.state.formatContext)}>
+      let mon = this.monthNum();
+      let day = `${this.year()}-${mon < 10 ? `0${mon}` : mon}-${i < 10 ? `0${i}` : i}`;
+      let alreadyReserved = true;
+      for (let j = 0; j < this.props.reservations.length; j++) {
+        let checkIn = this.props.reservations[j].checkin_date;
+        let checkout = this.props.reservations[j].checkout_date;
+        if (moment(day).isBetween(checkIn, checkout)) {
+          alreadyReserved = false;
+          break;
+        }
+      }
+      let validDay = moment(day).isBefore(moment().subtract(1, 'day'));
+      let goodDay = (
+        <Days
+          key={i}
+          className={className}
+          onClick={(event) => this.selectDay(event, i, this.state.formatContext)}
+        >
           <span>{i}</span>
         </Days>
       );
+      let badDay = (
+        <DeadDays key={i} className={className}>
+          <strike>{i}</strike>
+        </DeadDays>
+      );
+      existingDays.push(validDay || !alreadyReserved ? badDay : goodDay);
     }
     let daysArray = [...blankDays, ...existingDays];
     let rows = [];

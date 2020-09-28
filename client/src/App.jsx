@@ -13,7 +13,7 @@ import Calendar from './calendar/Calendar.jsx';
 import Guests from './Guests.jsx';
 import styled from './Styles.jsx';
 
-const focalId = 7;
+// const focalId = 7;
 
 const { AppWrapper, Reserve, Box } = styled;
 
@@ -35,7 +35,8 @@ class App extends React.Component {
       children: 0,
       infants: 0,
       nights: 1,
-      totalPrice: ''
+      totalPrice: '',
+      reservations: []
     };
 
     // bindings
@@ -47,6 +48,7 @@ class App extends React.Component {
     this.updateCheckOut = this.updateCheckOut.bind(this);
     this.updateNights = this.updateNights.bind(this);
     this.updateTotal = this.updateTotal.bind(this);
+    this.postReservation = this.postReservation.bind(this);
   }
 
   componentDidMount() {
@@ -65,7 +67,7 @@ class App extends React.Component {
       url: 'http://localhost:3000/reservation/api/reservations',
       data: { id: locationId },
       success: (data) => {
-        console.log(data);
+        this.setState({ reservations: data });
       },
       error: (err) => {
         console.log(err);
@@ -88,6 +90,31 @@ class App extends React.Component {
           service_fee: data[0].service_fee,
           occupancy_tax: data[0].occupancy_tax
         });
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  postReservation() {
+    const splitUrl = window.location.href.split('/');
+    // console.log(splitUrl)
+    const index = splitUrl[splitUrl.length - 1];
+    $.ajax({
+      method: 'POST',
+      url: 'http://localhost:3000/reservation/api/reservations',
+      data: {
+        checkin_date: this.state.checkIn,
+        checkout_date: this.state.checkOut,
+        adults: this.state.adults,
+        children: this.state.children,
+        infants: this.state.infants,
+        price: this.state.totalPrice,
+        locationId: index
+      },
+      success: () => {
+        console.log('posted');
       },
       error: (err) => {
         console.log(err);
@@ -128,22 +155,22 @@ class App extends React.Component {
     });
   }
 
-  updateCheckIn(date){
+  updateCheckIn(date) {
     this.setState({
       checkIn: date
-    })
+    });
   }
 
-  updateCheckOut(date){
+  updateCheckOut(date) {
     this.setState({
       checkOut: date
-    })
+    });
   }
 
-  updateNights(){
-    var momentIn = moment(this.state.checkIn, 'MM.DD.YYYY');
-    var momentOut = moment(this.state.checkOut, 'MM.DD.YYYY');
-    var difference = momentOut.diff(momentIn, 'days')
+  updateNights() {
+    let momentIn = moment(this.state.checkIn, 'MM.DD.YYYY');
+    let momentOut = moment(this.state.checkOut, 'MM.DD.YYYY');
+    let difference = momentOut.diff(momentIn, 'days');
     console.log(difference);
 
     this.setState({
@@ -151,9 +178,11 @@ class App extends React.Component {
     });
   }
 
-  updateTotal(){
+  updateTotal() {
     this.setState({
-      totalPrice: (this.state.service_fee + this.state.occupancy_tax + (this.state.nights * this.state.rate))
+      totalPrice: (
+        this.state.service_fee + this.state.occupancy_tax + (this.state.nights * this.state.rate)
+      )
     });
   }
 
@@ -166,10 +195,12 @@ class App extends React.Component {
           total={this.state.total_review}
         />
         <hr />
-        <Box  onClick={this.calendarPopUp}>
-          <span>{this.state.checkIn}</span> - <span>{this.state.checkOut}</span>
-          </Box>
-        {this.state.calendarOpen ? <Calendar updateCheckIn={this.updateCheckIn} updateCheckOut={this.updateCheckOut} updateNights={this.updateNights} updateTotal={this.updateTotal}/> : null}
+        <Box onClick={this.calendarPopUp}>
+          <span>{this.state.checkIn}</span>
+          -
+          <span>{this.state.checkOut}</span>
+        </Box>
+        {this.state.calendarOpen ? <Calendar updateCheckIn={this.updateCheckIn} updateCheckOut={this.updateCheckOut} updateNights={this.updateNights} updateTotal={this.updateTotal} reservations={this.state.reservations} /> : null}
         <hr />
         <div>Guests</div>
         <Box onClick={this.guestPopUp}>{this.state.adults + this.state.infants + this.state.children} guest(s)</Box>
@@ -181,7 +212,8 @@ class App extends React.Component {
           occupancy={this.state.occupancy_tax}
           nights={this.state.nights}
         /> : null}
-        <Reserve onClick={() => {console.log('hi'); }}>Reserve
+        <Reserve onClick={this.postReservation}>
+          Reserve
         </Reserve>
       </AppWrapper>
     );
