@@ -1,4 +1,4 @@
-const moment = require('moment');
-const today = moment();
+// const moment = require('moment');
+// const today = moment();
 
-console.log(moment('2010-10-20').isSame('2010-10-20'));
+// console.log(moment('2010-10-20').isSame('2010-10-20'));

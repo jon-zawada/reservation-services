@@ -269,7 +269,7 @@ const Cursor = styled.td`
   cursor:pointer;
 `;
 
-const Spacing = styled.td`
+const Spacing = styled.div`
   padding:10px;
 `;
 

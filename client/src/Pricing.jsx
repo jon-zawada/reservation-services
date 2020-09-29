@@ -26,12 +26,16 @@ const Pricing = ({
     <hr />
     <Info>
       <div> Occupancy taxes and fees</div>
-      <div> {occupancy} </div>
+      <div>
+        {occupancy}
+      </div>
     </Info>
     <hr />
     <Info>
       <div> Total </div>
-      <div> {rate * nights + occupancy + service} </div>
+      <div>
+        {rate * nights + occupancy + service}
+      </div>
     </Info>
   </BoxInv>
 );
