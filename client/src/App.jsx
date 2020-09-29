@@ -1,3 +1,4 @@
+/* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable import/extensions */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable react/destructuring-assignment */
@@ -15,7 +16,12 @@ import styled from './Styles.jsx';
 
 // const focalId = 7;
 
-const { AppWrapper, Reserve, Box } = styled;
+const {
+  AppWrapper,
+  Reserve,
+  Box,
+  Spacing
+} = styled;
 
 class App extends React.Component {
   constructor(props) {
@@ -68,6 +74,7 @@ class App extends React.Component {
       data: { id: locationId },
       success: (data) => {
         this.setState({ reservations: data });
+        console.log(data);
       },
       error: (err) => {
         console.log(err);
@@ -114,7 +121,7 @@ class App extends React.Component {
         locationId: index
       },
       success: () => {
-        console.log('posted');
+        this.getFirstReservations(index);
       },
       error: (err) => {
         console.log(err);
@@ -125,7 +132,7 @@ class App extends React.Component {
   // sub component helper functions
   increase(event) {
     const { name } = event.target;
-    let newState = this.state[name] + 1;
+    const newState = this.state[name] + 1;
     this.setState({
       [name]: newState
     });
@@ -135,7 +142,7 @@ class App extends React.Component {
   decrease(event) {
     const { name } = event.target;
     if (this.state[name] > 0) {
-      let newState = this.state[name] - 1;
+      const newState = this.state[name] - 1;
       this.setState({
         [name]: newState
       });
@@ -168,9 +175,9 @@ class App extends React.Component {
   }
 
   updateNights() {
-    let momentIn = moment(this.state.checkIn, 'MM.DD.YYYY');
-    let momentOut = moment(this.state.checkOut, 'MM.DD.YYYY');
-    let difference = momentOut.diff(momentIn, 'days');
+    const momentIn = moment(this.state.checkIn, 'MM.DD.YYYY');
+    const momentOut = moment(this.state.checkOut, 'MM.DD.YYYY');
+    const difference = momentOut.diff(momentIn, 'days');
     console.log(difference);
 
     this.setState({
@@ -206,12 +213,15 @@ class App extends React.Component {
         <Box onClick={this.guestPopUp}>{this.state.adults + this.state.infants + this.state.children} guest(s)</Box>
           {this.state.guestsOpen ? <Guests increase={this.increase} decrease={this.decrease} adults={this.state.adults} children={this.state.children} infants={this.state.infants}/> : null}
         <hr />
-        {this.state.checkIn !== 'Checkin' && this.state.checkOut !== 'Checkout' ? <Pricing
-          rate={this.state.rate}
-          service={this.state.service_fee}
-          occupancy={this.state.occupancy_tax}
-          nights={this.state.nights}
-        /> : null}
+        {this.state.checkIn !== 'Checkin' && this.state.checkOut !== 'Checkout' ? (
+          <Pricing
+            rate={this.state.rate}
+            service={this.state.service_fee}
+            occupancy={this.state.occupancy_tax}
+            nights={this.state.nights}
+          />
+        ) : null}
+        <Spacing />
         <Reserve onClick={this.postReservation}>
           Reserve
         </Reserve>

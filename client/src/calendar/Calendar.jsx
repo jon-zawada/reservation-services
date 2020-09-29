@@ -125,7 +125,7 @@ class Calendar extends React.Component {
       for (let j = 0; j < this.props.reservations.length; j++) {
         let checkIn = this.props.reservations[j].checkin_date;
         let checkout = this.props.reservations[j].checkout_date;
-        if (moment(day).isBetween(checkIn, checkout)) {
+        if (moment(day).isBetween(checkIn, checkout) || moment(day).isSame(checkIn) || moment(day).isSame(checkout)) {
           alreadyReserved = false;
           break;
         }

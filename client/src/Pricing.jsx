@@ -1,27 +1,39 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import styled from './Styles.jsx';
+
+// const focalId = 7;
+
+const { BoxInv, Info } = styled;
 
 const Pricing = ({
   rate, service, occupancy, nights
 }) => (
-  <div>
-    <div>
-      {`$${rate} x ${nights} nights`}
-      {` $${rate * nights}`}
-    </div>
+  <BoxInv>
+    <Info>
+      <div>
+        {`$${rate} x ${nights} nights`}
+      </div>
+      <div>
+        {rate * nights}
+      </div>
+    </Info>
     <hr />
-    <div>
-      {`Service Fee $${service} `}
-    </div>
+    <Info>
+      <div>Service Fee</div>
+      <div>{service}</div>
+    </Info>
     <hr />
-    <div>
-      {`Occupancy taxes and fees $${occupancy} `}
-    </div>
+    <Info>
+      <div> Occupancy taxes and fees</div>
+      <div> {occupancy} </div>
+    </Info>
     <hr />
-    <div>
-      {`Total ${rate * nights + occupancy + service}`}
-    </div>
-  </div>
+    <Info>
+      <div> Total </div>
+      <div> {rate * nights + occupancy + service} </div>
+    </Info>
+  </BoxInv>
 );
 
 export default Pricing;

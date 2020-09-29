@@ -18,6 +18,8 @@ app.get('/reservation/api/reservations', (req, res) => {
   Controller.getFirstReservations(req, res);
 });
 
+app.post('/reservation/api/reservations', Controller.postReservation);
+
 // locations
 app.get('/reservation/api/location/', (req, res) => {
   Controller.getLocation(req, res);

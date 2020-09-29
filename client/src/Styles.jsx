@@ -234,10 +234,57 @@ const Box = styled.div`
   padding: 8.5px;
 `;
 
+const BoxInv = styled.div`
+  /* border-bottom-color:rgb(235, 235, 235);
+  border-left-color:rgb(235, 235, 235);
+  border-right-color:rgb(235, 235, 235);
+  border-top-color:rgb(235, 235, 235); */
+  /* border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-sizing: border-box;
+  display: block;
+  width: 250px; */
+  /* cursor:pointer; */
+  padding: 8.5px;
+`;
+
+const Info = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+`;
+
 const Cursor = styled.td`
   cursor:pointer;
 `;
 
+const Spacing = styled.td`
+  padding:10px;
+`;
+
 export default {
-  AppWrapper, Reserve, Price, Star, CircleButton, Days, Box, Cursor, Arrow, DeadDays
+  AppWrapper,
+  Reserve,
+  Price,
+  Star,
+  CircleButton,
+  Days,
+  Box,
+  Cursor,
+  Arrow,
+  DeadDays,
+  Spacing,
+  BoxInv,
+  Info
 };
