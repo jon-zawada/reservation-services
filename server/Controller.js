@@ -22,4 +22,14 @@ const getLocation = (req, res) => {
   });
 };
 
-module.exports = { getFirstReservations, getLocation };
+const postReservation = (req, res) => {
+  Models.postReservation(req.body, (err) => {
+    if (err) {
+      res.status(401).send();
+    } else {
+      res.send();
+    }
+  });
+};
+
+module.exports = { getFirstReservations, getLocation, postReservation };

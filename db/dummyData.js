@@ -27,9 +27,10 @@ const seedLocations = () => {
 // 5 to 10 reservations per home
 const seedReservations = () => {
   for (let i = 1; i <= 100; i++) {
-    for (let j = 0; j < Math.floor((Math.random() * 5) + 5); j++) {
-      let checkin = `2020-${j + 1}-${randRange(1, 14)}`;
-      let checkout = `2020-${j + 1}-${randRange(15, 28)}`;
+    for (let j = 0; j < Math.floor((Math.random() * 12) + 12); j++) {
+      let month = Math.floor(Math.random() * 12) + 1;
+      let checkin = `2020-${month}-${randRange(3, 4)}`;
+      let checkout = `2020-${month}-${randRange(5, 6)}`;
       let adults = randRange(1, 5);
       let children = randRange(0, 5);
       let infants = randRange(0, 5);
